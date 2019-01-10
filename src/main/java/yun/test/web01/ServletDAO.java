@@ -1,7 +1,5 @@
 package yun.test.web01;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import java.io.*;
 import java.util.List;
 
@@ -9,11 +7,10 @@ import java.util.List;
  * Created by cjswo9207u@gmail.com on 2019-01-09
  * Github : https://github.com/YeoHoonYun
  */
-@WebServlet(name = "main", urlPatterns = "/main")
-public class MainServlet extends HttpServlet {
+public class ServletDAO{
     private BoardManager boardManager;
 
-    public MainServlet() {
+    public ServletDAO() {
         this.boardManager = new BoardManager();
     }
 

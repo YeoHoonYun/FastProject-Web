@@ -1,0 +1,34 @@
+# 유저 생성
+create user 'user'@'localhost' identified by 'hadoop';
+# 데이터베이스 생성
+create database FastCampus;
+#데이터 베이스 접근권한
+grant all privileges on FastCampus.* to 'user'@'localhost';
+use FastCampus;
+
+#테이블 생성
+create table Boards (
+num int(5) NOT NULL auto_increment,
+title varchar(50) NOT NULL,
+content text NOT NULL,
+name varchar(50) NOT NULL,
+passwd varchar(100) NOT NULL,
+createDate datetime NOT NULL,
+modifyDate datetime,
+primary key (num)
+);
+
+create table Users (
+num int(5) NOT NULL auto_increment,
+name varchar(50) NOT NULL,
+passwd varchar(100) NOT NULL,
+createDate datetime NOT NULL,
+primary key (num)
+);
+
+#데이터 생성
+insert into Boards(title, content, name, passwd, createDate) values("title01","content01","name01","passwd01", now());
+insert into Boards(title, content, name, passwd, createDate) values("title02","content02","name02","passwd02", now());
+insert into Boards(title, content, name, passwd, createDate) values("title03","content03","name03","passwd03",now());
+
+select * from Boards;
