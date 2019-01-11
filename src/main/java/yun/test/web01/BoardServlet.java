@@ -1,6 +1,5 @@
 package yun.test.web01;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +25,8 @@ public class BoardServlet extends HttpServlet {
         List<Board> list = new ArrayList<>();
         File file = new File("C:\\Users\\cjswo\\IdeaProjects\\web01\\boardData");
 
-        new BoardDAO(req, resp, ServletDAO, list, file).invoke();
+        // request, response, ServletDAO() - 데이터 CURD, 데이터
+        new BoardMethod(req, resp, ServletDAO, list, file).invoke();
     }
 
 }

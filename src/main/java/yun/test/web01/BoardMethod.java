@@ -1,6 +1,5 @@
 package yun.test.web01;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,19 +11,19 @@ import java.util.List;
  * Created by cjswo9207u@gmail.com on 2019-01-11
  * Github : https://github.com/YeoHoonYun
  */
-class BoardDAO {
+class BoardMethod {
     private HttpServletRequest req;
     private HttpServletResponse resp;
-    private ServletDAO servletDAO;
     private List<Board> list;
     private File file;
     public int num = 0;
+    ServletDAO servletDAO;
 
-    public BoardDAO(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) {
+    public BoardMethod(HttpServletRequest req, HttpServletResponse resp, yun.test.web01.ServletDAO servletDAO, List<Board> list, File file) {
+        this.servletDAO = servletDAO;
+        this.list  = list;
         this.req = req;
         this.resp = resp;
-        this.servletDAO = servletDAO;
-        this.list = list;
         this.file = file;
     }
 
@@ -32,7 +31,11 @@ class BoardDAO {
         if (file.exists()) {
             System.out.println("exist");
             list = ServletDAO.readFile(file);
-            this.num = list.get(list.size() - 1).getNum();
+            try{
+                this.num = list.get(list.size()-1).getNum();
+            }catch (Exception e){
+                this.num = 0;
+            }
         }
         return list;
     }
@@ -53,9 +56,18 @@ class BoardDAO {
 
         }else if(req.getPathInfo().equals("/write")){
             boardWrite(req, resp);
-
         }else if(req.getPathInfo().contains("/detail")){
             boardDetail(req, resp, servletDAO, list, file);
+        }else if(req.getPathInfo().contains("/update")){
+            list = getBoards(servletDAO, list, file);
+            System.out.println(req.getPathInfo());
+            list.get(Integer.parseInt(req.getPathInfo().substring(8)) - 1);
+            req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req,resp);
+        }else if(req.getPathInfo().contains("/delete")){
+            list = getBoards(servletDAO, list, file);
+            list.remove(Integer.parseInt(req.getPathInfo().substring(8))-1);
+            servletDAO.writeFile(list, file);
+            resp.sendRedirect("/board/select");
         }
     }
 
@@ -69,27 +81,22 @@ class BoardDAO {
     private void boardSelect(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
         list = getBoards(servletDAO, list, file);
         req.setAttribute("list", list);
-        RequestDispatcher requestDispatcher1 = req.getRequestDispatcher("/WEB-INF/views/main.jsp");
-        requestDispatcher1.forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req,resp);
     }
 
     private void boardMain(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher2 = req.getRequestDispatcher("/WEB-INF/views/main.jsp");
         list = getBoards(servletDAO, list, file);
         req.setAttribute("list", list);
-        requestDispatcher2.forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req,resp);
     }
 
     private void boardWrite(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher3 = req.getRequestDispatcher("/WEB-INF/views/write.jsp");
-        requestDispatcher3.forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/write.jsp").forward(req,resp);
     }
 
     private void boardDetail(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
-        int n = Integer.parseInt(req.getPathInfo().substring(8)) - 1;
         list = getBoards(servletDAO, list, file);
-        req.setAttribute("board", list.get(n));
-        RequestDispatcher requestDispatcher3 = req.getRequestDispatcher("/WEB-INF/views/detail.jsp");
-        requestDispatcher3.forward(req,resp);
+        req.setAttribute("board", list.get(Integer.parseInt(req.getPathInfo().substring(8)) - 1));
+        req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req,resp);
     }
 }
