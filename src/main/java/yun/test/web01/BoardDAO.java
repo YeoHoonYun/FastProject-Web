@@ -48,7 +48,7 @@ public class BoardDAO implements Serializable {
     }
     public void boardDelete(HttpServletRequest req, HttpServletResponse resp, BoardDB boardDB, List<Board> list, File file) throws IOException {
         list = getBoards(boardDB, list, file);
-        list.remove(Integer.parseInt(req.getPathInfo().substring(8))-1);
+        list.get(Integer.parseInt(req.getPathInfo().substring(8))-1).setNum(0);
         boardDB.writeFile(list, file);
         resp.sendRedirect("/board/main");
     }

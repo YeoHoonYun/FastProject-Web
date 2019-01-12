@@ -31,12 +31,14 @@
         </thead>
         <tbody>
         <c:forEach items="${requestScope.list}" var="board">
-            <tr>
-                <th scope="row">${board.num}</th>
-                <td><a href="/board/detail/${board.num}">${board.title}</a></td>
-                <td>${board.id}</td>
-                <td>${board.localDateTime}</td>
-            </tr>
+            <c:if test="${board.num != '0'}">
+                <tr>
+                    <th scope="row">${board.num}</th>
+                    <td><a href="/board/detail/${board.num}">${board.title}</a></td>
+                    <td>${board.id}</td>
+                    <td>${board.localDateTime}</td>
+                </tr>
+            </c:if>
         </c:forEach>
         </tbody>
     </table>
