@@ -36,10 +36,7 @@ public class BoardServlet extends HttpServlet {
             boardManager.boardInsert(req, resp, servletDAO, list, file);
 
         }
-        // 데이터 리스트 호출
-//        else if(req.getPathInfo().equals("/select")){
-//            boardManager.boardSelect(req, resp, servletDAO, list, file);
-//        }
+
         // 게시판 리스트
         else if(req.getPathInfo().equals("/main")){
             boardManager.boardMain(req, resp, servletDAO, list, file);
