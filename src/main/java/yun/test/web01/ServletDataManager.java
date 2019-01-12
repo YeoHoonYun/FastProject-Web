@@ -7,10 +7,10 @@ import java.util.List;
  * Created by cjswo9207u@gmail.com on 2019-01-09
  * Github : https://github.com/YeoHoonYun
  */
-public class ServletDAO{
+public class ServletDataManager {
     private BoardManager boardManager;
 
-    public ServletDAO() {
+    public ServletDataManager() {
         this.boardManager = new BoardManager();
     }
 
@@ -18,7 +18,7 @@ public class ServletDAO{
         ObjectInputStream in = null;
         try{
             in = new ObjectInputStream(new FileInputStream(file));
-            boardManager= (BoardManager) in.readObject();
+            boardManager = (BoardManager) in.readObject();
         }catch (Exception e){
             e.printStackTrace();
         }finally {

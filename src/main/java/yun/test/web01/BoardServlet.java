@@ -22,7 +22,7 @@ public class BoardServlet extends HttpServlet {
         // 각각의 board 관련 비어있는 인스턴스 생성
         List<Board> list = new ArrayList<>();
         Board board = new Board();
-        ServletDAO servletDAO = new ServletDAO();
+        ServletDataManager servletDataManager = new ServletDataManager();
         BoardManager boardManager = new BoardManager();
 
         // HttpServlet 설정 및 데이터 저장 파일 경로 선언
@@ -33,35 +33,35 @@ public class BoardServlet extends HttpServlet {
 
         // 데이터 입력명령 호출
         if(req.getPathInfo().equals("/insert")){
-            boardManager.boardInsert(req, resp, servletDAO, list, file);
+            boardManager.boardInsert(req, resp, servletDataManager, list, file);
 
         }
 
         // 게시판 리스트
         else if(req.getPathInfo().equals("/main")){
-            boardManager.boardMain(req, resp, servletDAO, list, file);
+            boardManager.boardMain(req, resp, servletDataManager, list, file);
         }
 
         // 게시물 작성
         else if(req.getPathInfo().contains("/write")){
-            boardManager.boardWrite(req, resp, servletDAO, list, board, file);
+            boardManager.boardWrite(req, resp, servletDataManager, list, board, file);
         }
 
         // 단일 게시물 출력
         else if(req.getPathInfo().contains("/detail")){
-            boardManager.boardDetail(req, resp, servletDAO, list, file);
+            boardManager.boardDetail(req, resp, servletDataManager, list, file);
 
         }
 
         // 단일 게시물 수정
         else if(req.getPathInfo().contains("/update")){
-            boardManager.boardUpdate(req, resp, servletDAO, list, board, file);
+            boardManager.boardUpdate(req, resp, servletDataManager, list, board, file);
 
         }
 
         // 단일 게시물 삭제
         else if(req.getPathInfo().contains("/delete")){
-            boardManager.boardDelete(req, resp, servletDAO, list, file);
+            boardManager.boardDelete(req, resp, servletDataManager, list, file);
         }
     }
 

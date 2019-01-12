@@ -31,9 +31,9 @@ public class BoardManager implements Serializable {
         this.boards = boards;
     }
 
-    public List<Board> getBoards(ServletDAO ServletDAO, List<Board> list, File file) {
+    public List<Board> getBoards(ServletDataManager ServletDataManager, List<Board> list, File file) {
         if (file.exists()) {
-            list = ServletDAO.readFile(file);
+            list = ServletDataManager.readFile(file);
             try{
                 this.num = list.get(list.size()-1).getNum();
             }catch (Exception e){
@@ -46,55 +46,55 @@ public class BoardManager implements Serializable {
     public String get(HttpServletRequest req, String string){
         return req.getParameter(string);
     }
-    public void boardDelete(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardDelete(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, File file) throws IOException {
+        list = getBoards(servletDataManager, list, file);
         list.remove(Integer.parseInt(req.getPathInfo().substring(8))-1);
-        servletDAO.writeFile(list, file);
+        servletDataManager.writeFile(list, file);
         resp.sendRedirect("/board/select");
     }
 
-    public void boardUpdate(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list,Board board , File file) throws IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardUpdate(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, Board board , File file) throws IOException {
+        list = getBoards(servletDataManager, list, file);
         board = list.get(Integer.parseInt(req.getPathInfo().substring(8))-1);
         board.setTitle(this.get(req,"title"));
         board.setContent(this.get(req,"content"));
         board.setId(this.get(req,"id"));
         board.setLocalDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        servletDAO.writeFile(list, file);
+        servletDataManager.writeFile(list, file);
         resp.sendRedirect("/board/main");
     }
 
-    public void boardWrite(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list,Board board ,File file) throws ServletException, IOException {
+    public void boardWrite(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, Board board , File file) throws ServletException, IOException {
         if(req.getPathInfo().substring(6).isEmpty()) {
             req.getRequestDispatcher("/WEB-INF/views/write.jsp").forward(req,resp);
         }else{
-            board = getBoards(servletDAO, list, file).get(Integer.parseInt(req.getPathInfo().substring(7)) - 1);
+            board = getBoards(servletDataManager, list, file).get(Integer.parseInt(req.getPathInfo().substring(7)) - 1);
             req.setAttribute("board", board);
             req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req,resp);
         }
     }
 
-    public void boardInsert(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardInsert(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, File file) throws IOException {
+        list = getBoards(servletDataManager, list, file);
         list.add(new Board(++num,this.get(req,"title"),this.get(req,"content"),this.get(req,"id"), this.get(req,"passwd")));
-        servletDAO.writeFile(list, file);
+        servletDataManager.writeFile(list, file);
         resp.sendRedirect("/board/main");
     }
 
-    public void boardSelect(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardSelect(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, File file) throws ServletException, IOException {
+        list = getBoards(servletDataManager, list, file);
         req.setAttribute("list", list);
         req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req,resp);
     }
 
-    public void boardMain(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardMain(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, File file) throws ServletException, IOException {
+        list = getBoards(servletDataManager, list, file);
         req.setAttribute("list", list);
         req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req,resp);
     }
 
-    public void boardDetail(HttpServletRequest req, HttpServletResponse resp, ServletDAO servletDAO, List<Board> list, File file) throws ServletException, IOException {
-        list = getBoards(servletDAO, list, file);
+    public void boardDetail(HttpServletRequest req, HttpServletResponse resp, ServletDataManager servletDataManager, List<Board> list, File file) throws ServletException, IOException {
+        list = getBoards(servletDataManager, list, file);
         req.setAttribute("board", list.get(Integer.parseInt(req.getPathInfo().substring(8)) - 1));
         req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req,resp);
     }
