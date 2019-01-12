@@ -29,7 +29,7 @@
             <textarea class="form-control" name="content" rows="3"  placeholder="내용">${board.content}</textarea>
         </div>
         <div class="form-group">
-            <label class="sr-only">ID</label>
+            <label>ID</label>
             <input type="id" class="form-control" name="id" placeholder="ID" value="${board.id}">
         </div>
         <button type="submit" class="btn btn-default">수정</button>

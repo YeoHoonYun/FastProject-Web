@@ -76,7 +76,7 @@ public class BoardDAO implements Serializable {
 
     public void boardInsert(HttpServletRequest req, HttpServletResponse resp, BoardDB boardDB, List<Board> list, File file) throws IOException {
         list = getBoards(boardDB, list, file);
-        list.add(new Board(++num,this.get(req,"title"),this.get(req,"content"),this.get(req,"id"), this.get(req,"passwd")));
+        list.add(new Board(++this.num,this.get(req,"title"),this.get(req,"content"),this.get(req,"id"), this.get(req,"passwd")));
         boardDB.writeFile(list, file);
         resp.sendRedirect("/board/main");
     }
