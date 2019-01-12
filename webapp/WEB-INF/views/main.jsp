@@ -42,14 +42,14 @@
     </table>
     <hr/>
     <a class="btn btn-default" href="write">글쓰기</a>
-    <div class="text-center"></div>
-    <ul class="pagination">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-    </ul>
+    <%--<div class="text-center"></div>--%>
+    <%--<ul class="pagination">--%>
+        <%--<li><a href="#">1</a></li>--%>
+        <%--<li><a href="#">2</a></li>--%>
+        <%--<li><a href="#">3</a></li>--%>
+        <%--<li><a href="#">4</a></li>--%>
+        <%--<li><a href="#">5</a></li>--%>
+    <%--</ul>--%>
 </div>
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
 <script type="text/javascript" src="http:code.jquery.com/jquery-1.8.3.min.js"></script>

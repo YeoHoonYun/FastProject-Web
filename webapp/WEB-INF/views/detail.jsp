@@ -31,7 +31,7 @@
         <textarea class="form-control" readonly="readonly" id="content" rows="10"  placeholder="내용">${board.content}</textarea>
     </div>
     <hr/>
-    <a class="btn btn-default" href="/board/update/${board.num}">수정</a>
+    <a class="btn btn-default" href="/board/write/${board.num}">수정</a>
     <a class="btn btn-default" href="/board/delete/${board.num}">삭제</a>
 </div>
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

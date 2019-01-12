@@ -19,18 +19,18 @@
 <body>
 <div class="container">
     <h1 class="text-center"><a href="/">테스트 페이지</a></h1>
-    <form>
+    <form method="post" action="/board/update/${board.num}">
         <div class="form-group">
             <label>제목</label>
-            <input type="title" class="form-control" name="title" placeholder="${board.title}">
+            <input type="title" class="form-control" name="title" placeholder="제목" value="${board.title}">
         </div>
         <div class="form-group">
             <label>내용</label>
-            <textarea class="form-control" name="content" rows="3"  placeholder="${board.content}"></textarea>
+            <textarea class="form-control" name="content" rows="3"  placeholder="내용">${board.content}</textarea>
         </div>
         <div class="form-group">
             <label class="sr-only">ID</label>
-            <input type="id" class="form-control" name="id" placeholder="${board.id}">
+            <input type="id" class="form-control" name="id" placeholder="ID" value="${board.id}">
         </div>
         <button type="submit" class="btn btn-default">수정</button>
     </form>
