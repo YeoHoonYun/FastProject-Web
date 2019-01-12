@@ -7,18 +7,18 @@ import java.util.List;
  * Created by cjswo9207u@gmail.com on 2019-01-09
  * Github : https://github.com/YeoHoonYun
  */
-public class ServletDataManager {
-    private BoardManager boardManager;
+public class BoardDB {
+    private BoardDAO boardDAO;
 
-    public ServletDataManager() {
-        this.boardManager = new BoardManager();
+    public BoardDB() {
+        this.boardDAO = new BoardDAO();
     }
 
     public List<Board> readFile(File file){
         ObjectInputStream in = null;
         try{
             in = new ObjectInputStream(new FileInputStream(file));
-            boardManager = (BoardManager) in.readObject();
+            boardDAO = (BoardDAO) in.readObject();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -28,15 +28,15 @@ public class ServletDataManager {
                 e.printStackTrace();
             }
         }
-        return boardManager.getBoards();
+        return boardDAO.getBoards();
     }
 
     public void writeFile(List<Board> boardList, File file){
         ObjectOutputStream out = null;
-        boardManager.setBoards(boardList);
+        boardDAO.setBoards(boardList);
         try{
             out = new ObjectOutputStream(new FileOutputStream(file));
-            out.writeObject(boardManager);
+            out.writeObject(boardDAO);
         }catch (Exception e){
             e.printStackTrace();
         }finally {

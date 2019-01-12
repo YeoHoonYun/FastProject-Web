@@ -15,15 +15,15 @@ import java.util.List;
  * Github : https://github.com/YeoHoonYun
  */
 @WebServlet(name = "board", urlPatterns = "/board/*")
-public class BoardServlet extends HttpServlet {
+public class BoardController extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 각각의 board 관련 비어있는 인스턴스 생성
         List<Board> list = new ArrayList<>();
         Board board = new Board();
-        ServletDataManager servletDataManager = new ServletDataManager();
-        BoardManager boardManager = new BoardManager();
+        BoardDB boardDB = new BoardDB();
+        BoardDAO boardDAO = new BoardDAO();
 
         // HttpServlet 설정 및 데이터 저장 파일 경로 선언
         req.setCharacterEncoding("UTF-8");
@@ -33,35 +33,35 @@ public class BoardServlet extends HttpServlet {
 
         // 데이터 입력명령 호출
         if(req.getPathInfo().equals("/insert")){
-            boardManager.boardInsert(req, resp, servletDataManager, list, file);
+            boardDAO.boardInsert(req, resp, boardDB, list, file);
 
         }
 
         // 게시판 리스트
         else if(req.getPathInfo().equals("/main")){
-            boardManager.boardMain(req, resp, servletDataManager, list, file);
+            boardDAO.boardMain(req, resp, boardDB, list, file);
         }
 
         // 게시물 작성
         else if(req.getPathInfo().contains("/write")){
-            boardManager.boardWrite(req, resp, servletDataManager, list, board, file);
+            boardDAO.boardWrite(req, resp, boardDB, list, board, file);
         }
 
         // 단일 게시물 출력
         else if(req.getPathInfo().contains("/detail")){
-            boardManager.boardDetail(req, resp, servletDataManager, list, file);
+            boardDAO.boardDetail(req, resp, boardDB, list, file);
 
         }
 
         // 단일 게시물 수정
         else if(req.getPathInfo().contains("/update")){
-            boardManager.boardUpdate(req, resp, servletDataManager, list, board, file);
+            boardDAO.boardUpdate(req, resp, boardDB, list, board, file);
 
         }
 
         // 단일 게시물 삭제
         else if(req.getPathInfo().contains("/delete")){
-            boardManager.boardDelete(req, resp, servletDataManager, list, file);
+            boardDAO.boardDelete(req, resp, boardDB, list, file);
         }
     }
 
